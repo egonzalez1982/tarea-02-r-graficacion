@@ -1,14 +1,16 @@
 ---
-title: "PF-0953 Programación geoespacial en R<br>Tarea 02: R - Graficación"
+title: 'PF-0953 Programación geoespacial en R<br>Tarea 02: R - Graficación'
 author: "Esteban Gonzalez Ramirez"
-date: "2020-09-16"
+date: '2020-09-16'
 output:
   html_document:
-    theme: readable    
-    toc: true
+    theme: readable
+    toc: yes
     toc_float:
-      collapsed: false
-      smooth_scroll: false  
+      collapsed: no
+      smooth_scroll: no
+  pdf_document:
+    toc: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -71,24 +73,54 @@ Las barras deben estar ordenadas de mayor (a la izquierda o arriba) a menor (a l
 - Nombres de los países en el eje correspondiente.  
 - Cantidad de casos en cada barra.
 
-```{r}
 
+```{r}
+library(ggplot2)
+ca_positivos.ordenado <- order(ca_covid19$positivos, decreasing=TRUE)
+ca_covid19.positivos <- ca_covid19[ca_positivos.ordenado,]
+ggplot(ca_covid19, aes(x=reorder(pais, -positivos), y=positivos)) +
+  ggtitle("Casos positivos de COVID-19 en Centroamérica y DOM") +
+  xlab("pais") + 
+  ylab("Casos positivos") +  
+  geom_col() +
+  geom_text(aes(label=positivos), vjust=-0.3, size=3.5)
+```
+```{r}
+library(ggplot2)
+ca_recuperados.ordenado <- order(ca_covid19$recuperados, decreasing=TRUE)
+ca_covid19.recuperados <- ca_covid19[ca_recuperados.ordenado,]
+ggplot(ca_covid19, aes(x=reorder(pais, -recuperados), y=recuperados)) +
+  ggtitle("Casos recuperados de COVID-19 en Centroamérica y DOM") +
+  xlab("pais") + 
+  ylab("Casos recuperados") +  
+  geom_col() +
+  geom_text(aes(label=recuperados), vjust=-0.3, size=3.5)
 ```
 
 ```{r}
+ca_activos.ordenado <- order(ca_covid19$activos, decreasing=TRUE)
+ca_covid19.activos <- ca_covid19[ca_activos.ordenado,]
+ggplot(ca_covid19, aes(x=reorder(pais, -activos), y=activos)) +
+  ggtitle("Casos activos de COVID-19 en Centroamérica y DOM") +
+  xlab("pais") + 
+  ylab("Casos activos") +  
+  geom_col() +
+  geom_text(aes(label=activos), vjust=-0.3, size=3.5) 
 
-```
 
-```{r}
-
-```
-
-```{r}
-
-```
-
-4. (10% - OPCIONAL) Genere un solo gráfico de barras que presente los cuatros tipos de casos, ya sea en barras apiladas o agrupadas.
 
 ```{r}
+ca_fallecidos.ordenado <- order(ca_covid19$fallecidos, decreasing=TRUE)
+ca_covid19.fallecidos <- ca_covid19[ca_fallecidos.ordenado,]
+ggplot(ca_covid19, aes(x=reorder(pais, -fallecidos), y=fallecidos)) +
+  ggtitle("Casos fallecidos de COVID-19 en Centroamérica y DOM") +
+  xlab("pais") + 
+  ylab("Casos fallecidos") +  
+  geom_col() +
+  geom_text(aes(label=fallecidos), vjust=-0.3, size=3.5) 
 
-```
+
+  
+
+
+
